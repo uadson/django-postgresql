@@ -67,4 +67,4 @@ Obs.: todos os comandos de agora em diante dependem de o ambiente virtual estar 
         Se retornar uma tela como a tela abaixo, está tudo ok com o projeto, caso contrário,
         reveja os passos anteriores.
 
-        ![tela_inicial_django](https://user-images.githubusercontent.com/62815552/120863493-09b09880-c561-11eb-97a5-e56660ca2359.png)
+https://user-images.githubusercontent.com/62815552/120863493-09b09880-c561-11eb-97a5-e56660ca2359.png
