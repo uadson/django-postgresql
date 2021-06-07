@@ -85,4 +85,36 @@ Após definição do projeto e aplicação, algumas configurações básicas sã
 
 ## Configurações
 
+1. Adicionando o app (myapp) ao projeto (myproject).
 
+No Framework django, é possível criar várias aplicações em um único projeto. Da mesma maneira que se tem o myapp vinculado ao projeto myproject, poderia ser ter myapp1, myapp2, myapp3 ..., todos vinculados ao mesmo projeto myproject.
+
+
+As configurações serão efetuadas no arquivo settings.py que está no diretório myproject.
+
+Dentro dele há o código abaixo:
+
+        # Application definition
+
+        INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+        ]
+
+O app (myapp) será incluído ao projeto através da lista INSTALLED_APPS:
+
+        # Application definition
+
+        INSTALLED_APPS = [
+            'django.contrib.admin',
+            'django.contrib.auth',
+            'django.contrib.contenttypes',
+            'django.contrib.sessions',
+            'django.contrib.messages',
+            'django.contrib.staticfiles',
+            'myapp',
+        ]
