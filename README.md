@@ -48,7 +48,7 @@ Integração Django e SGBD PostgreSQL
 
         pip freeze > requirements.txt
 
-## Construindo o Projeto
+## Construindo o Projeto/Aplicação
 
 Obs.: todos os comandos de agora em diante dependem de o ambiente virtual estar ativado,
       caso contrário, retornará uma mensagem de erro.
@@ -68,3 +68,21 @@ Obs.: todos os comandos de agora em diante dependem de o ambiente virtual estar 
         reveja os passos anteriores.
 
 ![tela_inicial_django](https://user-images.githubusercontent.com/62815552/120864079-079b0980-c562-11eb-883d-cdee9ffa3981.png)
+
+
+2. Criando uma aplicação.
+
+Quando o projeto foi criado, um estrutura de arquivos e diretórios foi criada.
+
+Um desses arquivos é o manage.py. Ele foi usado no tópico anterior para rodar o servidor.
+
+Para criar o projeto, basta digitar o comando:
+
+    python manage.py startapp myapp
+
+Após definição do projeto e aplicação, algumas configurações básicas são necessárias:
+
+
+## Configurações
+
+
