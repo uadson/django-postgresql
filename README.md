@@ -118,3 +118,69 @@ O app (myapp) será incluído ao projeto através da lista INSTALLED_APPS:
             'django.contrib.staticfiles',
             'myapp',
         ]
+
+2. Ocultando os dados de autenticação do banco de dados e de outras variáveis.
+Python-Decouple é uma excelente biblioteca para proteger tais parâmetros.
+
+Deve se criar um arquivo .env no diretório raiz do projeto, e nele devem ser informados os parâmetros que se deseja ocultar ao realizar o commit por exemplo, e tais dados não subirem para o repositório no nuvem. Para isso o arquivo .env deve ser informado no arquivo .gitignore.
+
+        
+        # Environments
+        .env
+        
+
+2.1 Após criação do arquivo .env, deve-se incluir parâmetros, os quais se deseja ocultar ao commitar o projeto.
+
+Neste projeto os dados protegidos serão:
+
+        SECRET_KEY = 'Be>31d>1jB84'?Yl`LMQS\:(~o':QK[j>@nFly(H:`H)M!4Un!KOsf>d_}xLMHa.u'
+
+        DEBUG = True
+        
+        ALLOWED_HOSTS = []
+        
+        DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'db_django_psql',
+            'USER': 'admin',
+            'PASSWORD': 'H)M!4Un!KOsf',
+            'HOST': 127.0.0.1,
+            'PORT': ''
+        }
+    }
+
+Estes dados serão informados no arquivo .env (sem as aspas):
+
+        SECRET_KEY = Be>31d>1jB84'?Yl`LMQS\:(~o':QK[j>@nFly(H:`H)M!4Un!KOsf>d_}xLMHa.u
+        DEBUG = True
+        ALLOWED_HOSTS = 127.0.0.1
+        DB_NAME = db_django_psql
+        DB_USER = admin
+        DB_PASSWORD = H)M!4Un!KOsf 
+        DB_HOST = 127.0.0.1
+
+
+Assim feito, no arquivo settings.py os dados agora ficarão da seguinte forma:
+
+    Importando a biblioteca e funções
+
+        from decouple import config, Csv
+
+
+            SECRET_KEY = config('SECRET_KEY')
+
+            DEBUG = config('DEBUG', cast=bool)
+            
+            ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+            
+            DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                'NAME': config('DB_NAME'),
+                'USER': config('DB_USER'),
+                'PASSWORD': config('DB_PASSWORD'),
+                'HOST': config('DB_HOST'),
+                'PORT': ''
+            }
+        }
