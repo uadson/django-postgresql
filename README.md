@@ -62,10 +62,10 @@ Obs.: todos os comandos de agora em diante dependem de o ambiente virtual estar 
 
         python manage.py runserver
 
-        No browser do navegador digite 127:0.0.1:8000 e pressione enter
+    No browser do navegador digite 127:0.0.1:8000 e pressione enter
 
-        Se retornar uma tela como a tela abaixo, está tudo ok com o projeto, caso contrário,
-        reveja os passos anteriores.
+    Se retornar uma tela como a tela abaixo, está tudo ok com o projeto, caso contrário,
+    reveja os passos anteriores.
 
 ![tela_inicial_django](https://user-images.githubusercontent.com/62815552/120864079-079b0980-c562-11eb-883d-cdee9ffa3981.png)
 
