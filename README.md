@@ -120,9 +120,9 @@ O app (myapp) será incluído ao projeto através da lista INSTALLED_APPS:
         ]
 
 2. Ocultando os dados de autenticação do banco de dados e de outras variáveis.
-Python-Decouple é uma excelente biblioteca para proteger tais parâmetros.
+Python-Decouple é uma excelente biblioteca para proteger tais parâmetros. Saiba mais sobre a biblioteca aqui: https://pypi.org/project/python-decouple/
 
-Deve se criar um arquivo .env no diretório raiz do projeto, e nele devem ser informados os parâmetros que se deseja ocultar ao realizar o commit por exemplo, e tais dados não subirem para o repositório no nuvem. Para isso o arquivo .env deve ser informado no arquivo .gitignore.
+Deve se criar um arquivo .env ou .ini no diretório raiz do projeto, e nele devem ser informados os parâmetros que se deseja ocultar ao realizar o commit por exemplo, e tais dados não subirem para o repositório no nuvem. Para isso o arquivo .env deve ser informado no arquivo .gitignore.
 
         
         # Environments
@@ -184,3 +184,76 @@ Assim feito, no arquivo settings.py os dados agora ficarão da seguinte forma:
                 'PORT': ''
             }
         }
+
+## Banco de Dados
+
+1. Por padrão Django possui alguns Apps implementados, conforme a lista INSTALLED_APPS no arquivo settings.py.
+
+O função migrate fará com que as tabelas relacionadas as estes Apps, sejá implementadas no banco de dados.
+
+
+        python manage.py migrate
+
+
+Resultado:
+
+
+        Apply all migrations: admin, auth, contenttypes, sessions
+        Running migrations:
+          Applying contenttypes.0001_initial... OK
+          Applying auth.0001_initial... OK
+          Applying admin.0001_initial... OK
+          Applying admin.0002_logentry_remove_auto_add... OK
+          Applying admin.0003_logentry_add_action_flag_choices... OK
+          Applying contenttypes.0002_remove_content_type_name... OK
+          Applying auth.0002_alter_permission_name_max_length... OK
+          Applying auth.0003_alter_user_email_max_length... OK
+          Applying auth.0004_alter_user_username_opts... OK
+          Applying auth.0005_alter_user_last_login_null... OK
+          Applying auth.0006_require_contenttypes_0002... OK
+          Applying auth.0007_alter_validators_add_error_messages... OK
+          Applying auth.0008_alter_user_username_max_length... OK
+          Applying auth.0009_alter_user_last_name_max_length... OK
+          Applying auth.0010_alter_group_name_max_length... OK
+          Applying auth.0011_update_proxy_permissions... OK
+          Applying auth.0012_alter_user_first_name_max_length... OK
+          Applying sessions.0001_initial... OK
+
+Ao utilizar o gerenciador de banco de dados PgAdmin por exemplo, é possível visualizar as tabelas criadas no banco.
+
+![pgadmin](https://user-images.githubusercontent.com/62815552/121387194-e1d68180-c920-11eb-9a00-7cdb19047a92.png)
+
+
+## Models
+
+1. O meio pelo qual se pode popular o banco com os dados relacionados a aplicação, é através do arquivo models.py.
+Nele serão criados os campos para captação dos dados e posteriormente, a inserção dos mesmos ao banco de dados.
+
+
+Exemplo:
+
+    1        from django.db import models
+    2
+    3        # Create your models here.
+    4        class Pessoa(models.Model):
+    5            nome = models.CharField(max_length=200, blank=False)
+    6
+    7            class Meta:
+    8                db_table = 'pessoa'
+    9
+    10            def __str__(self):
+    11                return self.nome
+
+O exemplo acima representa a criação de uma tabela e uma coluna cujo o atributo é 'nome':
+
+Linhas:
+
+1 - importação do módulo models
+
+4 - criação da classe Pessoa herdando de Models os parâmetros para serem aplicados à classe, e também será o nome da tabela
+
+5 - nome = é o atributo da classe Pessoa e que será portanto o atributo da coluna da tabela.
+
+7 - quando se cria uma classe, o seu nome será o nome da tabela, e consequentemente, para realizar a relação da aplicação e suas tabelas, por padrão, o nome da tabela ao ser criada será, no caso do projeto em questão, myapp_pessoa; para que o nome da tabela não tenho o nome da aplicação inserido nele, utiliza-se a class Meta com o atributo db_table; o nome da tabela ficará como 'pessoa';
+
+...
