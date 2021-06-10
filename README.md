@@ -254,6 +254,77 @@ Linhas:
 
 5 - nome = é o atributo da classe Pessoa e que será portanto o atributo da coluna da tabela.
 
-7 - quando se cria uma classe, o seu nome será o nome da tabela, e consequentemente, para realizar a relação da aplicação e suas tabelas, por padrão, o nome da tabela ao ser criada será, no caso do projeto em questão, myapp_pessoa; para que o nome da tabela não tenho o nome da aplicação inserido nele, utiliza-se a class Meta com o atributo db_table; o nome da tabela ficará como 'pessoa';
+7 - quando se cria uma classe, o seu nome será o nome da tabela, e consequentemente, para realizar a relação da aplicação e suas tabelas, por padrão, o nome da tabela ao ser criada será, no caso do projeto em questão, myapp_pessoa; para que o nome da tabela não tenha o nome da aplicação inserido nele, utiliza-se a class Meta com o atributo db_table; o nome da tabela ficará então como 'pessoa';
 
-...
+10 - o método __str__(self), considerado como um dos métodos mágicos em Python, retornará o nome do atributo nome,
+como uma string e não como o nome genérico do objeto.
+
+## Makemigrations
+
+Após criada a classe é hora de implementar essa tabela no projeto.
+Para isso é utilizado o método makemigrations
+
+Após toda alteração realizada no arquivo models.py é necessário realizar a execução deste comando para que as
+alterações sejam efetivadas.
+
+        python manage.py makemigrations
+
+Resultado:
+
+        Migrations for 'myapp':
+        myapp/migrations/0001_initial.py
+            - Create model Pessoa
+
+*Importante: como o projeto possui uma aplicação apenas - myapp - não há problema em realizar a execução do 
+comando makemigrations sem parâmetros. Mas a partir do momento em que houver mais de uma aplicação, é 
+importante que se informe a aplicação na qual será efetuadas as alterações.
+
+Ex.:
+
+        python manage.py makemigrations myapp2
+
+## Migrate
+
+Logo após a execução do comando makemigrations, para que a tabela seja criada no banco de dados, é preciso 
+executar o comando migrate.
+
+Um método interessante de se executar antes do migrate é sqlmigrate.
+
+Ele mostra previamente como a tabela será criada no banco de dados.
+
+Para isso é preciso executar o método, o nome da aplicação e número o código que foi gerado quando executado 
+o método makemigrations.
+
+Ex.: 
+
+        python manage.py sqlmigrate myapp 0001
+
+Resultado:
+
+        BEGIN;
+        --
+        -- Create model Pessoa
+        --
+        CREATE TABLE "pessoa" ("id" bigserial NOT NULL PRIMARY KEY, "nome" varchar(200) NOT NULL);
+        COMMIT;
+
+Em seguida o método migrate para implementar a tabela no banco de dados
+
+
+        python manage.py migrate
+
+        ou
+
+        python manage.py migrate myapp
+
+Resultado:
+
+        Operations to perform:
+        Apply all migrations: myapp
+        Running migrations:
+        Applying myapp.0001_initial... OK
+
+
+E agora pode-se ver a tabela criada com o nome 'pessoa' no banco de dados:
+
+![pg4](https://user-images.githubusercontent.com/62815552/121532721-ffb1ee00-c9d5-11eb-9cab-d51587a24b23.png)
